@@ -86,13 +86,13 @@ read_delim <- function(file, delim, quote = '"',
                        col_names = TRUE, col_types = NULL,
                        locale = default_locale(),
                        na = c("", "NA"), comment = "",
-                       skip = 0, n_max = -1, progress = interactive()) {
+                       skip = 0, n_max = -1, progress = interactive(), read_as_text=FALSE) {
   tokenizer <- tokenizer_delim(delim, quote = quote,
     escape_backslash = escape_backslash, escape_double = escape_double,
     na = na, comment = comment)
   read_delimited(file, tokenizer, col_names = col_names, col_types = col_types,
     locale = locale, skip = skip, comment = comment, n_max = n_max,
-    progress = progress)
+    progress = progress, read_as_text)
 }
 
 #' @rdname read_delim
@@ -146,11 +146,11 @@ read_tsv <- function(file, col_names = TRUE, col_types = NULL,
 # Helper functions for reading from delimited files ----------------------------
 read_delimited <- function(file, tokenizer, col_names = TRUE, col_types = NULL,
                            locale = default_locale(), skip = 0, comment = "",
-                           n_max = -1, progress = interactive()) {
+                           n_max = -1, progress = interactive(),read_as_text=FALSE) {
   name <- source_name(file)
   # If connection needed, read once.
   file <- standardise_path(file)
-  if (is.connection(file)) {
+  if (is.connection(file) && !read_as_text) {
     data <- read_connection(file)
   } else {
     data <- file
