@@ -50,6 +50,7 @@ NULL
 #'   and will only display if estimated reading time is 5 seconds or more.
 #' @return A data frame. If there are parsing problems, a warning tells you
 #'   how many, and you can retrieve the details with \code{\link{problems}()}.
+#' @param read_as_text True value forces parser to interpret \code{\link{file}} argument as csv text, not as path.
 #' @export
 #' @examples
 #' # Input sources -------------------------------------------------------------
@@ -92,7 +93,7 @@ read_delim <- function(file, delim, quote = '"',
     na = na, comment = comment)
   read_delimited(file, tokenizer, col_names = col_names, col_types = col_types,
     locale = locale, skip = skip, comment = comment, n_max = n_max,
-    progress = progress, read_as_text)
+    progress = progress, read_as_text = read_as_text)
 }
 
 #' @rdname read_delim
